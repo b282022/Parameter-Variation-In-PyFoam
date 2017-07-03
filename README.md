@@ -1,7 +1,6 @@
 # Automation of Parameter Variation and Real time Plotting for OpenFOAM using PyFOAM
 
 
-
 ## Table Of Content
 
 
@@ -103,7 +102,7 @@ In this method, you don't need to download sources
 
 Just type following command and all the scripts will be installed automatically
 
- - ```sudo pip install git+https://bitbucket.org/b282022/parameter-variation-pyfoam/ ```
+ - ```sudo pip install git+https://github.com/b282022/Parameter-Variation-In-PyFoam```
 
 ### 2.3 How to use the script
 
@@ -132,3 +131,4 @@ All this would not have been possible without support of
 1. OpenFOAM
 2.  PyFOAM
 3. And other packages required to build
+
