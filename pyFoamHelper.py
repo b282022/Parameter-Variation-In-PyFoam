@@ -4,6 +4,9 @@ from PyFoam.Execution import BasicRunner
 from PyFoam.Applications import PlotRunner
 from PyFoam.RunDictionary import ParsedParameterFile
 
+from parameter_checker import ChainDict, searchParameter, updateParameterValue
+
+import latex_append
 
 class PyFoamHelper:
     '''
@@ -26,7 +29,12 @@ class PyFoamHelper:
         :return: Returns nothing
         '''
 
-        dictFile[keyToChange] = currentValue
+        # import pdb; pdb.set_trace()
+
+        updateDict = ChainDict()
+        updateDict.set_key_chain(keyToChange, currentValue)
+
+        updateParameterValue(originalDict=dictFile.__dict__['content'], updateDict=updateDict)
         dictFile.writeFile()
 
         blockMeshRunner = BasicRunner.BasicRunner(['blockMesh'])
@@ -36,6 +44,12 @@ class PyFoamHelper:
 
         PlotRunner.PlotRunner(['--hardcopy', '--prefix-hardcopy=' + plotName, solver],
                               logname='PyFoam.' + plotName)
+
+
+        latexFile = open(keyToChange[-1] + '_Sweep.tex', 'a')
+        latex_append.appendPlot(latexFile=latexFile, plotPrefix=plotName)
+        latexFile.close()
+
 
     def openParsedParameterFile(self, paramFilePath):
         '''
@@ -64,7 +78,7 @@ class PyFoamHelper:
         :return: If the file can be parsed then returns True else returns False
         '''
         try:
-            t = ParsedParameterFile.ParsedParameterFile(filePath)
+            ParsedParameterFile.ParsedParameterFile(filePath)
         except AttributeError:
             print "Changing parameters of this file might not be supported! Sorry"
             return False
@@ -77,9 +91,6 @@ class PyFoamHelper:
         :param parameterName: The parameter on which we want to iterate
         :return: bool: True if the parameter exists in the file else False
         '''
-        try:
-            paramFile[parameterName]
-        except KeyError:
-            print "Invalid key"
-            return False
-        return True
+        return searchParameter(paramFile.__dict__['content'], parameterName)
+
+
