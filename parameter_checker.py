@@ -1,52 +1,51 @@
-from __init__ import  *
 import collections
 
-class ChainDict(dict):
-    '''
-    Subclass of class dict which can be used to update a specific parameter value
-    '''
-    def set_key_chain(self, keyList, value):
-        '''
 
-        :param keyList:
+class ChainDict(dict):
+    """
+    Subclass of class dict which can be used to update a specific parameter value
+    """
+    def set_key_chain(self, key_list, value):
+        """
+        :param key_list:
         :param value:
         :return:
-        '''
+        """
         t = self
-        for k in keyList[:-1]:
+        for k in key_list[:-1]:
             t = t.setdefault(k, {})
-        t = t.setdefault(keyList[-1], value)
+        t.setdefault(key_list[-1], value)
 
-def searchParameter(parameterDictionary, parameterName):
-    '''
 
-    :param parameterDictionary:
-    :param parameterName:
+def search_parameter(parameter_dictionary, parameter_name):
+    """
+    :param parameter_dictionary:
+    :param parameter_name:
     :return:
-    '''
-    isPresent = False
-    for k, v in parameterDictionary.iteritems():
+    """
+    is_present = False
+    for k, v in parameter_dictionary.iteritems():
         if isinstance(v, dict):
-            isPresent = isPresent | searchParameter(v, parameterName)
-            if isPresent == True:
-                return isPresent
-        if k == parameterName:
-            isPresent = True
-            return  isPresent
-    return isPresent
+            is_present = is_present | search_parameter(v, parameter_name)
+            if is_present == True:
+                return is_present
+        if k == parameter_name:
+            is_present = True
+            return  is_present
+    return is_present
 
-def updateParameterValue(originalDict, updateDict):
-    '''
 
-    :param originalDict:
-    :param updateDict:
+def update_parameter_value(original_dict, update_dict):
+    """
+    :param original_dict:
+    :param update_dict:
     :return:
-    '''
-    for k, v in updateDict.iteritems():
+    """
+    for k, v in update_dict.iteritems():
         if isinstance(v, collections.Mapping):
-            r = updateParameterValue(originalDict.get(k, {}), v)
-            originalDict[k] = r
+            r = update_parameter_value(original_dict.get(k, {}), v)
+            original_dict[k] = r
         else:
-            originalDict[k] = updateDict[k]
-    return originalDict
+            original_dict[k] = update_dict[k]
+    return original_dict
 

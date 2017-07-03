@@ -1,39 +1,49 @@
 #!/usr/bin/python
 
 # System Inbuilt imports
-from __init__ import *
-import sys
+import time
 
 # My imports
 import constants
-from pyFoamHelper import PyFoamHelper
-import time
+import pyFoamHelper
+import sys
 import latex_append
+import utilities
 
-# import pdb; pdb.set_trace()
+if len(sys.argv) == 2:
+    if sys.argv[1] == '--help':
+        utilities.print_help_message()
+        sys.exit(0)
+    else:
+        print "Too few arguments"
+        utilities.print_help_message()
+        sys.exit(2)
 
-PyFoamHelperObject = PyFoamHelper()
+elif len(sys.argv) < 5:
+    print "Too few arguments"
+    utilities.print_help_message()
+    sys.exit(2)
+
 # Path of the dictionary file, in which the parameter has to be swept
 pathOfDict = sys.argv[1]
 
 # If the path entered is wrong
-if not PyFoamHelperObject.isValidFile(pathOfDict):
+if not pyFoamHelper.is_valid_file(pathOfDict):
     sys.exit(1)
 
 # If the file which contains the parameter is not supported by parser
-if not PyFoamHelperObject.isParameterVariationSupported(pathOfDict):
+if not pyFoamHelper.is_parameter_variation_supported(pathOfDict):
     sys.exit(1)
 
-
 # Parsed parameter file object
-parameterFile = PyFoamHelperObject.openParsedParameterFile(pathOfDict)
+parameterFile = pyFoamHelper.open_parsed_parameter_file(pathOfDict)
 
 # The parameter which has to be swept
 keyToBeChanged = sys.argv[2].split('/')
 
 # If exists, store initial value of parameter somewhere so after all itertations you can put it back
-if not PyFoamHelperObject.isValidParameter(parameterFile, keyToBeChanged[-1]):
-    print "Parameter", keyToBeChanged[-1]," Not found, Please enter correct parameter!"
+if not pyFoamHelper.is_valid_parameter(parameterFile, keyToBeChanged[-1]):
+    print "Parameter", keyToBeChanged[-1], " Not found, Please enter correct parameter!"
     sys.exit(1)
 
 # initialValue = parameterFile[keyToBeChanged]
@@ -45,7 +55,6 @@ if len(parameterSweep) < 3:
     print "Please give input in proper format which can be parsed in floats!"
     sys.exit(1)
 
-
 try:
     startValueOfKey = float(parameterSweep[0])
     incrementalValue = float(parameterSweep[1])
@@ -54,7 +63,7 @@ except ValueError:
     print "Please give input in proper format which can be parsed in floats!"
     sys.exit(1)
 
-if finalValueOfKey  < startValueOfKey:
+if finalValueOfKey < startValueOfKey:
     print "Please provide range in proper formats!"
     sys.exit(1)
 
@@ -63,43 +72,30 @@ if not constants.existsSolver(solver):
     print "Not a valid OpenFOAM solver, Please try again!"
     sys.exit(1)
 
-
 # Write header of latex file
 latexFileName = keyToBeChanged[-1] + '_Sweep.tex'
 latexFile = open(latexFileName, 'w')
-latex_append.writeHeader(latexFile, latexFileName)
+latex_append.write_header(latexFile, latexFileName)
 latexFile.close()
 
 currentParameterValue = startValueOfKey
 
 # Run iterations for different values of parameter
 while currentParameterValue <= finalValueOfKey:
-    PyFoamHelperObject.solveForAParticularValue(dictFile=parameterFile, keyToChange=keyToBeChanged, currentValue=currentParameterValue,
-                             solver=solver)
+    pyFoamHelper.solve_for_a_particular_value(dict_file=parameterFile, key_to_change=keyToBeChanged,
+                                              current_value=currentParameterValue,
+                                              solver=solver)
 
     currentParameterValue += incrementalValue
 
 time.sleep(5)
 
-# Rename plots
-print "Renaming Files"
-currentParameterValue = startValueOfKey
-while currentParameterValue <= finalValueOfKey:
-    plotName = 'AtParameterValue' + str(currentParameterValue)
-
-    imageName = plotName
-    split = plotName.split(".")
-
-    if(len(split)) == 2:
-        imageName = split[0] + "_" + split[1]
-
-    os.rename(plotName + '.linear.png', imageName + 'linear.png')
-    os.rename(plotName + '.cont.png', imageName + 'cont.png')
-    currentParameterValue += incrementalValue
+# Rename plots after simulation for each value is done
+utilities.rename_files(startValueOfKey, incrementalValue, finalValueOfKey)
 
 # Write footer of latex file
 latexFile = open(latexFileName, 'a')
-latex_append.writeFooter(latexFile)
+latex_append.write_footer(latexFile)
 latexFile.close()
 
 # Save the original file back

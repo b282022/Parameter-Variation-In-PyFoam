@@ -1,2 +1,4 @@
 *.pyc
 .idea/*
+*_extra.py
+__init__.py

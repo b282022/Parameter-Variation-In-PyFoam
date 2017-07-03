@@ -1,96 +1,81 @@
-from __init__ import *
-
 from PyFoam.Execution import BasicRunner
 from PyFoam.Applications import PlotRunner
 from PyFoam.RunDictionary import ParsedParameterFile
-
-from parameter_checker import ChainDict, searchParameter, updateParameterValue
-
+from parameter_checker import ChainDict, search_parameter, update_parameter_value
 import latex_append
-
-class PyFoamHelper:
-    '''
-    PyFoam Helper class with additional property of
-    1) Automating parameter sweep
-    2) Saving plots and logs
-    '''
-
-    def __init__(self):
-        return
-
-    def solveForAParticularValue(self, dictFile, keyToChange, currentValue, solver):
-        '''
-        Runs the simulation for current value of parameter
-        Saves the plots of continuity and residuals and logs for current value of parameter
-        :param dictFile: Parsed dictionary file (Type: ParsedParameterFile) which contains the parameter which is to be swept through iteration
-        :param keyToChange: Parameter which is to be changed through out the simulation
-        :param currentValue: Current value of parameter
-        :param solver: Name of solver to be used
-        :return: Returns nothing
-        '''
-
-        # import pdb; pdb.set_trace()
-
-        updateDict = ChainDict()
-        updateDict.set_key_chain(keyToChange, currentValue)
-
-        updateParameterValue(originalDict=dictFile.__dict__['content'], updateDict=updateDict)
-        dictFile.writeFile()
-
-        blockMeshRunner = BasicRunner.BasicRunner(['blockMesh'])
-        blockMeshRunner.start()
-
-        plotName = 'AtParameterValue' + str(currentValue)
-
-        PlotRunner.PlotRunner(['--hardcopy', '--prefix-hardcopy=' + plotName, solver],
-                              logname='PyFoam.' + plotName)
+import os
 
 
-        latexFile = open(keyToChange[-1] + '_Sweep.tex', 'a')
-        latex_append.appendPlot(latexFile=latexFile, plotPrefix=plotName)
-        latexFile.close()
+def solve_for_a_particular_value(dict_file, key_to_change, current_value, solver):
+    """
+    Runs the simulation for current value of parameter
+    Saves the plots of continuity and residuals and logs for current value of parameter
+    :param dict_file: Parsed dictionary file (Type: ParsedParameterFile) which contains the parameter which is to be swept through iteration
+    :param key_to_change: Parameter which is to be changed through out the simulation
+    :param current_value: Current value of parameter
+    :param solver: Name of solver to be used
+    :return: Returns nothing
+    """
+    update_dict = ChainDict()
+    update_dict.set_key_chain(key_to_change, current_value)
+
+    update_parameter_value(originalDict=dict_file.__dict__['content'], updateDict=update_dict)
+    dict_file.writeFile()
+
+    block_mesh_runner = BasicRunner.BasicRunner(['blockMesh'])
+    block_mesh_runner.start()
+
+    plot_name = 'AtParameterValue' + str(current_value)
+
+    PlotRunner.PlotRunner(['--hardcopy', '--prefix-hardcopy=' + plot_name, solver],
+                          logname='PyFoam.' + plot_name)
+
+    latex_file = open(key_to_change[-1] + '_Sweep.tex', 'a')
+    latex_append.append_plot(latexFile=latex_file, plotPrefix=plot_name)
+    latex_file.close()
 
 
-    def openParsedParameterFile(self, paramFilePath):
-        '''
-        The utility method that returns parsed dictionary object (of type ParsedParameterFile)
-        which contains the parameter that has to be changed through out the simulation
-        :param paramFilePath: The path of dictionary file to be opened
-        :return: The parsed dictionary object of type ParsedParameterFile
-        '''
-        return ParsedParameterFile.ParsedParameterFile(paramFilePath)
-
-    def isValidFile(self, filePath):
-        '''
-        Method to check if the given file path is correct or not
-        :param filePath: The path of file
-        :return: If the given file path is correct then returns True else returns False
-        '''
-        if not os.path.exists(filePath):
-            print "Entered path", filePath, "is wrong, Please try again!"
-            return False
-        return True
-
-    def isParameterVariationSupported(self, filePath):
-        '''
-        Method to check if file can be parsed using ParsedParameterFile utility of PyFOAM
-        :param filePath: The path of dictionary/file which is to be parsed using ParsedParameterFile
-        :return: If the file can be parsed then returns True else returns False
-        '''
-        try:
-            ParsedParameterFile.ParsedParameterFile(filePath)
-        except AttributeError:
-            print "Changing parameters of this file might not be supported! Sorry"
-            return False
-        return True
-
-    def isValidParameter(self, paramFile, parameterName):
-        '''
-        Error check, if parameter exists or not
-        :param paramFile: The parameterFile in which we can find the parameter we want to change
-        :param parameterName: The parameter on which we want to iterate
-        :return: bool: True if the parameter exists in the file else False
-        '''
-        return searchParameter(paramFile.__dict__['content'], parameterName)
+def open_parsed_parameter_file(param_file_path):
+    """
+    The utility method that returns parsed dictionary object (of type ParsedParameterFile)
+    which contains the parameter that has to be changed through out the simulation
+    :param param_file_path: The path of dictionary file to be opened
+    :return: The parsed dictionary object of type ParsedParameterFile
+    """
+    return ParsedParameterFile.ParsedParameterFile(param_file_path)
 
 
+def is_valid_file(file_path):
+    """
+    Method to check if the given file path is correct or not
+    :param file_path: The path of file
+    :return: If the given file path is correct then returns True else returns False
+    """
+    if not os.path.exists(file_path):
+        print "Entered path", file_path, "is wrong, Please try again!"
+        return False
+    return True
+
+
+def is_parameter_variation_supported(file_path):
+    """
+    Method to check if file can be parsed using ParsedParameterFile utility of PyFOAM
+    :param file_path: The path of dictionary/file which is to be parsed using ParsedParameterFile
+    :return: If the file can be parsed then returns True else returns False
+    """
+    try:
+        ParsedParameterFile.ParsedParameterFile(file_path)
+    except AttributeError:
+        print "Changing parameters of this file might not be supported! Sorry"
+        return False
+    return True
+
+
+def is_valid_parameter(param_file, parameter_name):
+    """
+    Error check, if parameter exists or not
+    :param param_file: The parameterFile in which we can find the parameter we want to change
+    :param parameter_name: The parameter on which we want to iterate
+    :return: bool: True if the parameter exists in the file else False
+    """
+    return search_parameter(param_file.__dict__['content'], parameter_name)
