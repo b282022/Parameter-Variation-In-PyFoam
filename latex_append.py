@@ -1,5 +1,3 @@
-from __init__ import *
-
 
 def append_plot(latex_file, plot_prefix):
     """
