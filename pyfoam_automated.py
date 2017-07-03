@@ -42,8 +42,8 @@ parameterFile = pyFoamHelper.open_parsed_parameter_file(pathOfDict)
 keyToBeChanged = sys.argv[2].split('/')
 
 # If exists, store initial value of parameter somewhere so after all itertations you can put it back
-if not pyFoamHelper.is_valid_parameter(parameterFile, keyToBeChanged[-1]):
-    print "Parameter", keyToBeChanged[-1], " Not found, Please enter correct parameter!"
+if not pyFoamHelper.is_valid_parameter(parameterFile, keyToBeChanged):
+    print "Parameter", sys.argv[2], " Not found, Please enter correct parameter!"
     sys.exit(1)
 
 # initialValue = parameterFile[keyToBeChanged]
@@ -97,7 +97,3 @@ utilities.rename_files(startValueOfKey, incrementalValue, finalValueOfKey)
 latexFile = open(latexFileName, 'a')
 latex_append.write_footer(latexFile)
 latexFile.close()
-
-# Save the original file back
-# parameterFile[keyToBeChanged] = initialValue
-#   parameterFile.writeFile()

@@ -12,7 +12,7 @@ def append_plot(latex_file, plot_prefix):
     split = plot_prefix.split(".")
 
     if (len(split)) == 2:
-        image_name = (split[0].title()) + '_' + (split[1].split(".")[0].title())
+        image_name = split[0] + '_' + split[1]
 
     latex_file.write('\\begin{figure}[H]\n')
     latex_file.write('\t\\includegraphics[width=\\linewidth]{' + image_name + 'linear.png}\n')
@@ -39,7 +39,7 @@ def write_header(latex_file, latex_file_name):
 
     # Title of LaTeX file
     split = latex_file_name.split("_")
-    title_of_latex_file = split[0] + " " + split[1] + " Plots"
+    title_of_latex_file = (split[0].title()) + " " + (split[1].split('.')[0].title()) + " Plots"
     title_of_latex_file.title()
 
     # Writing the header

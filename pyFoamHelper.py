@@ -1,7 +1,7 @@
 from PyFoam.Execution import BasicRunner
 from PyFoam.Applications import PlotRunner
 from PyFoam.RunDictionary import ParsedParameterFile
-from parameter_checker import ChainDict, search_parameter, update_parameter_value
+from parameter_checker import ChainDict, modified_search_for_parameter, update_parameter_value
 import latex_append
 import os
 
@@ -71,11 +71,11 @@ def is_parameter_variation_supported(file_path):
     return True
 
 
-def is_valid_parameter(param_file, parameter_name):
+def is_valid_parameter(param_file, path_to_parameter):
     """
     Error check, if parameter exists or not
-    :param param_file: The parameterFile in which we can find the parameter we want to change
-    :param parameter_name: The parameter on which we want to iterate
-    :return: bool: True if the parameter exists in the file else False
+    :param param_file: The parameter file in which we can find the parameter we want to change
+    :param path_to_parameter: The full path to parameter on which we want to iterate
+    :return: bool: True if the path provided to parameter is correct else False
     """
-    return search_parameter(param_file.__dict__['content'], parameter_name)
+    return modified_search_for_parameter(param_file.__dict__['content'], path_to_parameter, 0)
