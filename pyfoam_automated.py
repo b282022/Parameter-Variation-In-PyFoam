@@ -68,7 +68,7 @@ if finalValueOfKey < startValueOfKey:
     sys.exit(1)
 
 solver = sys.argv[4]
-if not constants.existsSolver(solver):
+if not constants.exists_solver(solver):
     print "Not a valid OpenFOAM solver, Please try again!"
     sys.exit(1)
 

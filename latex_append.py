@@ -1,3 +1,5 @@
+import os
+
 
 def append_plot(latex_file, plot_prefix):
     """
@@ -10,7 +12,7 @@ def append_plot(latex_file, plot_prefix):
     split = plot_prefix.split(".")
 
     if (len(split)) == 2:
-        image_name = split[0] + '_' + split[1]
+        image_name = (split[0].title()) + '_' + (split[1].split(".")[0].title())
 
     latex_file.write('\\begin{figure}[H]\n')
     latex_file.write('\t\\includegraphics[width=\\linewidth]{' + image_name + 'linear.png}\n')

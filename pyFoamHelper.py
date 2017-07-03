@@ -19,7 +19,7 @@ def solve_for_a_particular_value(dict_file, key_to_change, current_value, solver
     update_dict = ChainDict()
     update_dict.set_key_chain(key_to_change, current_value)
 
-    update_parameter_value(originalDict=dict_file.__dict__['content'], updateDict=update_dict)
+    update_parameter_value(original_dict=dict_file.__dict__['content'], update_dict=update_dict)
     dict_file.writeFile()
 
     block_mesh_runner = BasicRunner.BasicRunner(['blockMesh'])
@@ -31,7 +31,7 @@ def solve_for_a_particular_value(dict_file, key_to_change, current_value, solver
                           logname='PyFoam.' + plot_name)
 
     latex_file = open(key_to_change[-1] + '_Sweep.tex', 'a')
-    latex_append.append_plot(latexFile=latex_file, plotPrefix=plot_name)
+    latex_append.append_plot(latex_file=latex_file, plot_prefix=plot_name)
     latex_file.close()
 
 
