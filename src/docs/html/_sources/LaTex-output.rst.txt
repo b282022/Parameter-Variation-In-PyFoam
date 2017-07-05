@@ -1,0 +1,5 @@
+LaTex output
+=============
+
+.. automodule:: latex_append
+   :members:

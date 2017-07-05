@@ -1,0 +1,24 @@
+Welcome to Parameter-Variation-In-PyFoam's documentation!
+=========================================================
+
+* In the field of CFD are based on varying a certain parameter of the system.
+* For example, changing viscosity in a particular range, and trying to find the suitable amount of parameter which leads to some sort of optimization.
+* PyFOAM adds a python layer above OpenFOAM and does many things like plotting of residuals on the fly when the case is being simulated, saving the logs of OpenFOAM, manipulating dictionary files of the case in which case related information is stored and many more things.
+* Automating this so called “parameter sweep” for a given case.
+* Save the plots generated directly into a .tex file which can be directly compiled into a .pdf format later on automatically.
+
+.. toctree::
+   :caption: Contents:
+
+
+   Utilities
+   pyfoam-helper
+   LaTex-output
+   others
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

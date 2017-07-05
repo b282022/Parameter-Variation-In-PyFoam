@@ -1,0 +1,132 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>utilities &#8212; Parameter-Variation-In-PyFoam 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for utilities</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="rename_files"><a class="viewcode-back" href="../Utilities.html#utilities.rename_files">[docs]</a><span class="k">def</span> <span class="nf">rename_files</span><span class="p">(</span><span class="n">start_value</span><span class="p">,</span> <span class="n">incremental_value</span><span class="p">,</span> <span class="n">final_value</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rename plots after simulation for each value is done</span>
+<span class="sd">    Method renames files to a format such that, it can be added in such a way that LaTeX file compiles</span>
+<span class="sd">    :param start_value: The initial value of range with which the parameter starts changing its value</span>
+<span class="sd">    :param incremental_value: The value with which the parameter increases its value</span>
+<span class="sd">    :param final_value: The final value of parameter</span>
+<span class="sd">    :return: void</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">while</span> <span class="n">start_value</span> <span class="o">&lt;=</span> <span class="n">final_value</span><span class="p">:</span>
+        <span class="n">plotName</span> <span class="o">=</span> <span class="s1">&#39;AtParameterValue&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">start_value</span><span class="p">)</span>
+
+        <span class="n">imageName</span> <span class="o">=</span> <span class="n">plotName</span>
+        <span class="n">split</span> <span class="o">=</span> <span class="n">plotName</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">imageName</span> <span class="o">=</span> <span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">plotName</span> <span class="o">+</span> <span class="s1">&#39;.linear.png&#39;</span><span class="p">,</span> <span class="n">imageName</span> <span class="o">+</span> <span class="s1">&#39;linear.png&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">plotName</span> <span class="o">+</span> <span class="s1">&#39;.cont.png&#39;</span><span class="p">,</span> <span class="n">imageName</span> <span class="o">+</span> <span class="s1">&#39;cont.png&#39;</span><span class="p">)</span>
+        <span class="n">start_value</span> <span class="o">+=</span> <span class="n">incremental_value</span></div>
+
+
+<div class="viewcode-block" id="print_help_message"><a class="viewcode-back" href="../Utilities.html#utilities.print_help_message">[docs]</a><span class="k">def</span> <span class="nf">print_help_message</span><span class="p">():</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Help message about how to use this script and how to give command line arguments</span>
+<span class="sd">    :return: Nothing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span> <span class="s2">&quot;Four arguments required &lt;path_of_dictionary_file&gt; &lt;parameter_name&gt; &lt;range_of_parameter&gt; &lt;name_of_solver&gt;&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;1) Whole path of the file in which the parameter to change is stored&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> For example, if you want to open controlDict file in system directory type ./system/controlDict&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;2) The full in-depth path to parameter which is to be changed over a given range of value&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> For example, if you want to change tolerance of p in the file fvSolution type solvers/p/tolerance&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;3) The range of values for which the parameter is to be changed&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\t</span><span class="s2"> For example, if you want to change tolerance of p from 0.000001 to 0.000005 at intervals of 0.000001 </span>
+<span class="s2">    </span><span class="se">\t</span><span class="s2"> type 0.00001:0.000001:0.0.000005&quot;&quot;&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;4) The name of solver which you want to use&quot;</span>
+    <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> For example, if you want to use icoFoam then type icoFoam&quot;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Mihir and Tarun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

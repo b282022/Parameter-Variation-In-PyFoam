@@ -1,0 +1,198 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>constants &#8212; Parameter-Variation-In-PyFoam 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for constants</h1><div class="highlight"><pre>
+<span></span><span class="n">LIST_OF_ALL_OPENFOAM_SOLVERS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;simpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;pimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;shallowWaterFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;sonicFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;cavitatingFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;laplacianFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;potentialFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;scalarTransportFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;adjointShapeOptimizationFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;boundaryFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;icoFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;nonNewtonianIcoFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;pimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;pimpleDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;SRFPimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;pisoFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;shallowWaterFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;simpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;porousSimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;SRFSimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoCentralFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoCentralDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoPimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoPimpleDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoSimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoPorousSimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;sonicFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;sonicDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;sonicLiquidFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;cavitatingFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;cavitatingDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;compressibleInterFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;compressibleInterDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;compressibleMultiphaseInterFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;driftFluxFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;interFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;interDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;interMixingFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;interIsoFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;interFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;interPhaseChangeFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;interPhaseChangeDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;MPPICInterFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;multiphaseEulerFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;multiphaseInterFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;multiphaseInterDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;potentialFreeSurfaceFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;potentialFreeSurfaceDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;reactingMultiphaseEulerFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;reactingTwoPhaseEulerFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;twoLiquidMixingFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;twoPhaseEulerFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;dnsFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;chemFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;coldEngineFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;engineFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;fireFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;PDRFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;reactingFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoReactingBuoyantFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;rhoReactingFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;XiFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;XiDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;buoyantBoussinesqPimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;buoyantBoussinesqSimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;buoyantPimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;buoyantSimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;chtMultiRegionFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;chtMultiRegionSimpleFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;thermoFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;coalChemistryFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;DPMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;DPMDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;MPPICDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;MPPICFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;icoUncoupledKinematicParcelFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;icoUncoupledKinematicParcelDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;reactingParcelFilmFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;reactingParcelFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;simpleReactingParcelFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;simpleCoalParcelFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;sprayFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;sprayDyMFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;sprayEngineFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;uncoupledKinematicParcelFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;mdEquilibrationFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;mdFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;dsmcFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;electrostaticFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;magneticFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;mhdFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;solidDisplacementFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;solidEquilibriumDisplacementFoam&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;financialFoam&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="exists_solver"><a class="viewcode-back" href="../others.html#constants.exists_solver">[docs]</a><span class="k">def</span> <span class="nf">exists_solver</span><span class="p">(</span><span class="n">solver_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function to check if the solver&#39;s name entered by user is correct or not</span>
+<span class="sd">    :param solver_name: Name of the solver to be searched</span>
+<span class="sd">    :return bool: If solver exists in OpenFOAM then return True else return False</span>
+
+<span class="sd">    :Examples:</span>
+<span class="sd">        &gt;&gt;&gt; exists_solver(&#39;icoFoam&#39;)</span>
+<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; exists_solver(&#39;someGarbageSolver&#39;)</span>
+<span class="sd">            False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">solver_name</span> <span class="ow">in</span> <span class="n">LIST_OF_ALL_OPENFOAM_SOLVERS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Mihir and Tarun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

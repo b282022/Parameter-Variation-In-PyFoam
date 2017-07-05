@@ -1,0 +1,160 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Helper functions &#8212; Parameter-Variation-In-PyFoam 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LaTex output" href="LaTex-output.html" />
+    <link rel="prev" title="Utilities" href="Utilities.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="LaTex-output.html" title="LaTex output"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Utilities.html" title="Utilities"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pyFoamHelper">
+<span id="helper-functions"></span><h1>Helper functions<a class="headerlink" href="#module-pyFoamHelper" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pyFoamHelper.is_parameter_variation_supported">
+<code class="descclassname">pyFoamHelper.</code><code class="descname">is_parameter_variation_supported</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyFoamHelper.html#is_parameter_variation_supported"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyFoamHelper.is_parameter_variation_supported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to check if file can be parsed using ParsedParameterFile utility of PyFOAM <br>
+:param file_path: The path of dictionary/file which is to be parsed using ParsedParameterFile <br>
+:return: If the file can be parsed then returns True else returns False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyFoamHelper.is_valid_file">
+<code class="descclassname">pyFoamHelper.</code><code class="descname">is_valid_file</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyFoamHelper.html#is_valid_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyFoamHelper.is_valid_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to check if the given file path is correct or not <br>
+:param file_path: The path of file <br>
+:return: If the given file path is correct then returns True else returns False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyFoamHelper.is_valid_parameter">
+<code class="descclassname">pyFoamHelper.</code><code class="descname">is_valid_parameter</code><span class="sig-paren">(</span><em>param_file</em>, <em>path_to_parameter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyFoamHelper.html#is_valid_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyFoamHelper.is_valid_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error check, if parameter exists or not <br>
+:param param_file: The parameter file in which we can find the parameter we want to change <br>
+:param path_to_parameter: The full path to parameter on which we want to iterate <br>
+:return: bool: True if the path provided to parameter is correct else False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyFoamHelper.open_parsed_parameter_file">
+<code class="descclassname">pyFoamHelper.</code><code class="descname">open_parsed_parameter_file</code><span class="sig-paren">(</span><em>param_file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyFoamHelper.html#open_parsed_parameter_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyFoamHelper.open_parsed_parameter_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>The utility method that returns parsed dictionary object (of type ParsedParameterFile) <br>
+which contains the parameter that has to be changed through out the simulation <br>
+:param param_file_path: The path of dictionary file to be opened <br>
+:return: The parsed dictionary object of type ParsedParameterFile</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyFoamHelper.solve_for_a_particular_value">
+<code class="descclassname">pyFoamHelper.</code><code class="descname">solve_for_a_particular_value</code><span class="sig-paren">(</span><em>dict_file</em>, <em>key_to_change</em>, <em>current_value</em>, <em>solver</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyFoamHelper.html#solve_for_a_particular_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyFoamHelper.solve_for_a_particular_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the simulation for current value of parameter <br>
+Saves the plots of continuity and residuals and logs for current value of parameter <br>
+:param dict_file: Parsed dictionary file (Type: ParsedParameterFile) which contains the parameter which is to be swept through iteration <br>
+:param key_to_change: Parameter which is to be changed through out the simulation <br>
+:param current_value: Current value of parameter <br>
+:param solver: Name of solver to be used <br>
+:return: Returns nothing</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Utilities.html"
+                        title="previous chapter">Utilities</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="LaTex-output.html"
+                        title="next chapter">LaTex output</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pyfoam-helper.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="LaTex-output.html" title="LaTex output"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Utilities.html" title="Utilities"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Mihir and Tarun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

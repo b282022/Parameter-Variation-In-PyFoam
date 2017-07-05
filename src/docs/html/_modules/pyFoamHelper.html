@@ -1,0 +1,168 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyFoamHelper &#8212; Parameter-Variation-In-PyFoam 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyFoamHelper</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PyFoam.Execution</span> <span class="k">import</span> <span class="n">BasicRunner</span>
+<span class="kn">from</span> <span class="nn">PyFoam.Applications</span> <span class="k">import</span> <span class="n">PlotRunner</span>
+<span class="kn">from</span> <span class="nn">PyFoam.RunDictionary</span> <span class="k">import</span> <span class="n">ParsedParameterFile</span>
+<span class="kn">from</span> <span class="nn">parameter_checker</span> <span class="k">import</span> <span class="n">ChainDict</span><span class="p">,</span> <span class="n">modified_search_for_parameter</span><span class="p">,</span> <span class="n">update_parameter_value</span>
+<span class="kn">import</span> <span class="nn">latex_append</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="solve_for_a_particular_value"><a class="viewcode-back" href="../pyfoam-helper.html#pyFoamHelper.solve_for_a_particular_value">[docs]</a><span class="k">def</span> <span class="nf">solve_for_a_particular_value</span><span class="p">(</span><span class="n">dict_file</span><span class="p">,</span> <span class="n">key_to_change</span><span class="p">,</span> <span class="n">current_value</span><span class="p">,</span> <span class="n">solver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the simulation for current value of parameter</span>
+<span class="sd">    Saves the plots of continuity and residuals and logs for current value of parameter</span>
+<span class="sd">    :param dict_file: Parsed dictionary file (Type: ParsedParameterFile) which contains the parameter which is to be swept through iteration</span>
+<span class="sd">    :param key_to_change: Parameter which is to be changed through out the simulation</span>
+<span class="sd">    :param current_value: Current value of parameter</span>
+<span class="sd">    :param solver: Name of solver to be used</span>
+<span class="sd">    :return: Returns nothing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_dict</span> <span class="o">=</span> <span class="n">ChainDict</span><span class="p">()</span>
+    <span class="n">update_dict</span><span class="o">.</span><span class="n">set_key_chain</span><span class="p">(</span><span class="n">key_to_change</span><span class="p">,</span> <span class="n">current_value</span><span class="p">)</span>
+
+    <span class="n">update_parameter_value</span><span class="p">(</span><span class="n">original_dict</span><span class="o">=</span><span class="n">dict_file</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="n">update_dict</span><span class="o">=</span><span class="n">update_dict</span><span class="p">)</span>
+    <span class="n">dict_file</span><span class="o">.</span><span class="n">writeFile</span><span class="p">()</span>
+
+    <span class="n">block_mesh_runner</span> <span class="o">=</span> <span class="n">BasicRunner</span><span class="o">.</span><span class="n">BasicRunner</span><span class="p">([</span><span class="s1">&#39;blockMesh&#39;</span><span class="p">])</span>
+    <span class="n">block_mesh_runner</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">plot_name</span> <span class="o">=</span> <span class="s1">&#39;AtParameterValue&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_value</span><span class="p">)</span>
+
+    <span class="n">PlotRunner</span><span class="o">.</span><span class="n">PlotRunner</span><span class="p">([</span><span class="s1">&#39;--hardcopy&#39;</span><span class="p">,</span> <span class="s1">&#39;--prefix-hardcopy=&#39;</span> <span class="o">+</span> <span class="n">plot_name</span><span class="p">,</span> <span class="n">solver</span><span class="p">],</span>
+                          <span class="n">logname</span><span class="o">=</span><span class="s1">&#39;PyFoam.&#39;</span> <span class="o">+</span> <span class="n">plot_name</span><span class="p">)</span>
+
+    <span class="n">latex_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">key_to_change</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_Sweep.tex&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="n">latex_append</span><span class="o">.</span><span class="n">append_plot</span><span class="p">(</span><span class="n">latex_file</span><span class="o">=</span><span class="n">latex_file</span><span class="p">,</span> <span class="n">plot_prefix</span><span class="o">=</span><span class="n">plot_name</span><span class="p">)</span>
+    <span class="n">latex_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="open_parsed_parameter_file"><a class="viewcode-back" href="../pyfoam-helper.html#pyFoamHelper.open_parsed_parameter_file">[docs]</a><span class="k">def</span> <span class="nf">open_parsed_parameter_file</span><span class="p">(</span><span class="n">param_file_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The utility method that returns parsed dictionary object (of type ParsedParameterFile)</span>
+<span class="sd">    which contains the parameter that has to be changed through out the simulation</span>
+<span class="sd">    :param param_file_path: The path of dictionary file to be opened</span>
+<span class="sd">    :return: The parsed dictionary object of type ParsedParameterFile</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ParsedParameterFile</span><span class="o">.</span><span class="n">ParsedParameterFile</span><span class="p">(</span><span class="n">param_file_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_valid_file"><a class="viewcode-back" href="../pyfoam-helper.html#pyFoamHelper.is_valid_file">[docs]</a><span class="k">def</span> <span class="nf">is_valid_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to check if the given file path is correct or not</span>
+<span class="sd">    :param file_path: The path of file</span>
+<span class="sd">    :return: If the given file path is correct then returns True else returns False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Entered path&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;is wrong, Please try again!&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="is_parameter_variation_supported"><a class="viewcode-back" href="../pyfoam-helper.html#pyFoamHelper.is_parameter_variation_supported">[docs]</a><span class="k">def</span> <span class="nf">is_parameter_variation_supported</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to check if file can be parsed using ParsedParameterFile utility of PyFOAM</span>
+<span class="sd">    :param file_path: The path of dictionary/file which is to be parsed using ParsedParameterFile</span>
+<span class="sd">    :return: If the file can be parsed then returns True else returns False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ParsedParameterFile</span><span class="o">.</span><span class="n">ParsedParameterFile</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="s2">&quot;Changing parameters of this file might not be supported! Sorry&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="is_valid_parameter"><a class="viewcode-back" href="../pyfoam-helper.html#pyFoamHelper.is_valid_parameter">[docs]</a><span class="k">def</span> <span class="nf">is_valid_parameter</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">path_to_parameter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error check, if parameter exists or not</span>
+<span class="sd">    :param param_file: The parameter file in which we can find the parameter we want to change</span>
+<span class="sd">    :param path_to_parameter: The full path to parameter on which we want to iterate</span>
+<span class="sd">    :return: bool: True if the path provided to parameter is correct else False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">modified_search_for_parameter</span><span class="p">(</span><span class="n">param_file</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="n">path_to_parameter</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Parameter-Variation-In-PyFoam 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Mihir and Tarun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

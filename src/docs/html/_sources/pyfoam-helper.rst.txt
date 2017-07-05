@@ -1,0 +1,5 @@
+Helper functions
+================
+
+.. automodule:: pyFoamHelper
+   :members:
