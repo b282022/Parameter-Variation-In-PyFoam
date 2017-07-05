@@ -1,5 +1,5 @@
 import os
-
+import pwd
 
 def append_plot(latex_file, plot_prefix):
     """
@@ -47,6 +47,7 @@ def write_header(latex_file, latex_file_name):
     latex_file.write('\\usepackage[utf8]{inputenc}\n')
     latex_file.write('\\usepackage{float}\n')
     latex_file.write('\\title{' + title_of_latex_file + '}\n')
+    os.getlogin = lambda: pwd.getpwuid(os.getuid())[0]
     latex_file.write('\\author{' + os.getlogin().title() + '}\n')
     latex_file.write('\\usepackage{natbib}\n')
     latex_file.write('\\usepackage{graphicx}\n')

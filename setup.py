@@ -6,8 +6,7 @@ list_of_scripts = glob.glob(os.path.join('src', '*.py'))
 list_of_scripts.remove('src/__init__.py')
 
 required_installs = [
-    'PyFoam==0.6.7',
-    'numpy==1.12.1'
+    'PyFoam==0.6.7'
 ]
 
 
